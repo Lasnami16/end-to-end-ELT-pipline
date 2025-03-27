@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: stg_documents
+    description: "Staging table for documents data from MongoDB."
+    columns:
+      - name: id
+        description: "Unique identifier for the document."
+        tests:
+          - not_null
+          - unique
+
+      - name: document_name
+        description: "First name of the document."
+        tests:
+          - not_null
+
+      - name: document_description
+        description: "Last name of the document."
+
+      - name: created_at
+        description: "Timestamp when the document was created."
+        tests:
+          - not_null
+
+      - name: updated_at
+        description: "Timestamp when the document was last updated."

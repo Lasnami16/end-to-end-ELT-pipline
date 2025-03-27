@@ -1,4 +1,3 @@
-# mongodb_utils.py
 import json
 from pymongo import MongoClient
 from datetime import datetime
@@ -27,8 +26,11 @@ def fetch_collection(collection_name):
     # Fetch all documents from the collection
     cursor = collection.find()
     
-    # Convert MongoDB cursor to a list and serialize it as JSON
-    json_data = json.dumps(list(cursor), indent=4, ensure_ascii=False, cls=MongoJSONEncoder)
+    # Convert each MongoDB document to JSON and save in NDJSON format
+    json_data = ""
+    for document in cursor:
+        json_data += json.dumps(document, ensure_ascii=False, cls=MongoJSONEncoder) + "\n"
+    
     return json_data
 
 def save_json_to_file(json_data, file_path):

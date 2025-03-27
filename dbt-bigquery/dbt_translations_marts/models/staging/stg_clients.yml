@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: stg_clients
+    description: "Staging table for clients data from MongoDB."
+    columns:
+      - name: id
+        description: "Unique identifier for the client."
+        tests:
+          - not_null
+          - unique
+
+      - name: first_name
+        description: "First name of the client."
+        tests:
+          - not_null
+
+      - name: last_name
+        description: "Last name of the client."
+        tests:
+          - not_null
+
+      - name: email
+        description: "Email address of the client."
+        tests:
+          - not_null
+          - unique
+
+      - name: phone
+        description: "Phone number of the client."
+        tests:
+          - not_null
+
+      - name: created_at
+        description: "Timestamp when the client was created."
+        tests:
+          - not_null
+
+      - name: updated_at
+        description: "Timestamp when the client was last updated."
