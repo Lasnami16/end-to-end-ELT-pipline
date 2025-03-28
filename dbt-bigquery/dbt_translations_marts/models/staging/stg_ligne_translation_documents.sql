@@ -1,3 +1,10 @@
+{{
+  config(
+    materialized='table',
+    cluster_by=['document_id', 'language']  
+  )
+}}
+
 WITH translation_source AS (
     SELECT
         GENERATE_UUID() AS id,
@@ -7,8 +14,9 @@ WITH translation_source AS (
         d.language,
         d.nb_copies
     FROM 
-        {{source('raw_translations','translations')}}, UNNEST (documents) AS d
+        {{ source('raw_translations', 'translations') }} AS t,
+        UNNEST (t.documents) AS d
 
-    )
+)
 
 SELECT * FROM translation_source

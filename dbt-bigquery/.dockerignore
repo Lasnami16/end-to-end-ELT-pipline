@@ -1,0 +1,25 @@
+# Ignorer les fichiers de configuration sensibles
+.env
+#credentials.json
+*.key
+*.pem
+
+# Ignorer les dossiers de cache et de logs
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+logs/
+*.log
+
+# Ignorer les fichiers spécifiques à l'IDE/OS
+.vscode/
+.idea/
+.DS_Store
+
+# Ignorer les dossiers inutiles
+dbt_modules/
+target/
+dbt_packages/
+
+venv

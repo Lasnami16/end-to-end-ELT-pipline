@@ -20,3 +20,9 @@ venv/
 Thumbs.db
 
 profiles.yml
+
+
+# Ignorer les fichiers spécifiques à l'IDE/OS
+.vscode/
+.idea/
+.DS_Store

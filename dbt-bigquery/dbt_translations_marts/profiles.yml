@@ -1,14 +1,25 @@
 dbt_translations_marts:
   outputs:
     dev:
-      dataset: dbt_translations_marts
+      dataset: "{{ env_var('DBT_DATASET_DEV') }}" 
       job_execution_timeout_seconds: 300
       job_retries: 1
-      keyfile: C:\Users\hp\OneDrive\Bureau\projects\end-to-end-ELT-pipline\dbt-bigquery\credentials.json
-      location: EU
+      keyfile: "{{ env_var('KEYPATH_DEV') }}"
+      location: "{{ env_var('LOCATION_DEV') }}"
       method: service-account
       priority: interactive
-      project: wissem-school
+      project: "{{ env_var('PROJECT_ID') }}"
       threads: 1
       type: bigquery
-  target: dev
+    prod:
+      dataset: "{{ env_var('DBT_DATASET_PROD') }}" 
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      keyfile: "{{ env_var('KEYPATH_PROD') }}"
+      location: "{{ env_var('LOCATION_PROD') }}"
+      method: service-account
+      priority: interactive
+      project: "{{ env_var('PROJECT_ID') }}"
+      threads: 1
+      type: bigquery
+  target: prod
