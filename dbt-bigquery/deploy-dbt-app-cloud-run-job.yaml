@@ -1,0 +1,41 @@
+steps:
+  - name: google/cloud-sdk:489.0.0-slim
+    script: |
+      IMAGE_PATH="$LOCATION-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/$JOB_NAME:$IMAGE_TAG"
+      
+      gcloud builds submit --tag "$IMAGE_PATH" .
+      
+      gcloud run jobs deploy "$JOB_NAME" \
+        --image "$IMAGE_PATH" \
+        --project="$PROJECT_ID" \
+        --region="$LOCATION" \
+        --service-account="$SERVICE_ACCOUNT" \
+        --max-retries 3
+
+    env:
+      - 'PROJECT_ID=$PROJECT_ID'
+      - 'LOCATION=$LOCATION'
+      - 'REPO_NAME=$REPO_NAME'
+      - 'JOB_NAME=$JOB_NAME'
+      - 'IMAGE_TAG=$IMAGE_TAG'
+      - 'SERVICE_ACCOUNT=$_SERVICE_ACCOUNT'
+
+
+
+    # env:
+    #   - 'PROJECT_ID=$PROJECT_ID'
+    #   - 'LOCATION=$LOCATION'
+    #   - 'REPO_NAME=$_REPO_NAME'
+    #   - 'JOB_NAME=$_JOB_NAME'
+    #   - 'IMAGE_TAG=$_IMAGE_TAG'
+    #   - 'SERVICE_ACCOUNT=$_SERVICE_ACCOUNT'
+    #   - 'DBT_DATASET_PROD=$DBT_DATASET_PROD'
+    #   - 'KEYPATH_DEV=$KEYPATH_DEV'
+    #   - 'DBT_DATASET_DEV=$DBT_DATASET_DEV'
+    #   - 'LOCATION_DEV=$LOCATION_DEV'
+    #   - 'KEYPATH_PROD=$KEYPATH_PROD'
+    #   - 'LOCATION_PROD=$LOCATION_PROD'
+    #   - 'DBT_TARGET=$DBT_TARGET'
+
+
+

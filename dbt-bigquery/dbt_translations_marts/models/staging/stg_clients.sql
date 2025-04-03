@@ -1,4 +1,4 @@
-with source_clients AS (
+WITH source_clients AS (
     SELECT
         _id AS id,
         first_name,

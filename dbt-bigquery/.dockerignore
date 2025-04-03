@@ -9,17 +9,14 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-logs/
-*.log
+#logs/
+#*.log
 
 # Ignorer les fichiers spécifiques à l'IDE/OS
 .vscode/
 .idea/
 .DS_Store
 
-# Ignorer les dossiers inutiles
-dbt_modules/
-target/
-dbt_packages/
+
 
 venv

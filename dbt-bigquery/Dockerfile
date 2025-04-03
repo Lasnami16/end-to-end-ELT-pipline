@@ -1,4 +1,4 @@
-FROM ghcr.io/dbt-labs/dbt-bigquery:1.9.latest
+FROM ghcr.io/dbt-labs/dbt-bigquery:1.8.2
 
 
 WORKDIR /app

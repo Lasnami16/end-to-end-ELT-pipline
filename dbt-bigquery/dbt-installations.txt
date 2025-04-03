@@ -2,3 +2,10 @@ Create venv: python -m venv venv
 Acrivate the venv: ./venv/Scripts/Activate 
 Run: pip install dbt-bigquery
 dbt init
+
+
+Deployment to cloud run:
+
+
+
+
