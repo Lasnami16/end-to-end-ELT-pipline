@@ -42,36 +42,41 @@ models:
         description: "Discount value"
         tests:
           - not_null  
-          - greater_than_equal:
-              value: 0  
+          - dbt_utils.accepted_range:
+              min_value: 0 
+              inclusive: true 
 
       - name: total_without_discount
         description: "The total ammount without discount"
         tests:
           - not_null  
-          - greater_than:
-              value: 0  
+          - dbt_utils.accepted_range:
+              min_value: 0 
+              inclusive: false 
 
       - name: total
         description: "The total generated of the translation"
         tests:
           - not_null  
-          - greater_than:
-              value: 0  
+          - dbt_utils.accepted_range:
+              min_value: 0 
+              inclusive: false 
 
       - name: rest
         description: "Rest of payment"
         tests:
           - not_null  
-          - greater_than_equal:
-              value: 0 
+          - dbt_utils.accepted_range:
+              min_value: 0 
+              inclusive: true 
 
       - name: payment
         description: "Payment till now"
         tests:
           - not_null  
-          - greater_than_equal:
-              value: 0 
+          - dbt_utils.accepted_range:
+              min_value: 0 
+              inclusive: false 
 
       - name: created_at
         description: "Timestamp when the translation was created."
