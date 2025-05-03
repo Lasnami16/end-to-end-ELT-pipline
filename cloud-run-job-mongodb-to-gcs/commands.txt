@@ -40,13 +40,5 @@ gcloud run jobs update mongodb-to-gcs-job `
   --service-account google-drive@wissem-school.iam.gserviceaccount.com
 
 
-
-gcloud auth configure-docker europe-west9-docker.pkg.dev
-docker build -t europe-west9-docker.pkg.dev/wissem-school/end-to-end-etl-pipline/mongodb-to-gcs-job .
-docker push europe-west9-docker.pkg.dev/wissem-school/end-to-end-etl-pipline/mongodb-to-gcs-job
-gcloud run jobs update mongodb-to-gcs-job `
-  --image europe-west9-docker.pkg.dev/wissem-school/end-to-end-etl-pipline/mongodb-to-gcs-job `
-  --region europe-west9 `
-  --set-env-vars "MONGODB_CONNECTION='mongodb+srv://wcvwvwv:sdcvs@translation.d7i1rqk.mongodb.net/?retryWrites=true&w=majority&appName=translation',GCS_BUCKET_NAME='traduction_rapidos',GOOGLE_APPLICATION_CREDENTIALS='/app/credentials.json',GCS_FOLDER='translations',TEST='test'" `
-  --memory 512Mi `
-  --service-account vsdfv-wfv@wv-wvw.iam.gserviceaccount.com
+#passe the encoded credentials.json file:
+[Convert]::ToBase64String([System.IO.File]::ReadAllBytes("C:\Users\hp\OneDrive\Bureau\projects\end-to-end-ELT-pipline\cloud-run-job-mongodb-to-gcs\credentials.json")) > encoded.txt 
