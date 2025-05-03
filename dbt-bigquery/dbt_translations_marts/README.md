@@ -16,7 +16,7 @@ Try running the following commands:
 
 
 
-### export env variables:
+### export env variables windows:
 $env:PROJECT_ID="wissem-school"
 $env:DBT_DATASET_DEV="translations_dev" 
 $env:KEYPATH_DEV="C:\Users\hp\OneDrive\Bureau\projects\end-to-end-ELT-pipline\dbt-bigquery\credentials.json"
@@ -29,6 +29,20 @@ $env:REPO_NAME="end-to-end-etl-pipline"
 $env:LOCATION="europe-west9"
 $env:IMAGE_TAG="latest"
 $env:SERVICE_ACCOUNT="/app/credentials.json"
+
+### export env variables MAC/linux:
+export PROJECT_ID="wissem-school"
+export DBT_DATASET_DEV="translations_dev" 
+export KEYPATH_DEV="/Users/macbookair/Desktop/projects/translation/end-to-end-ELT-pipline/dbt-bigquery/credentials.json"
+export LOCATION_DEV="EU"
+export DBT_DATASET_PROD="translations_prod" 
+export KEYPATH_PROD="/Users/macbookair/Desktop/projects/translation/end-to-end-ELT-pipline/dbt-bigquery/credentials.json"
+export LOCATION_PROD="EU"
+export JOB_NAME="dbt_translations_prod_marts"
+export REPO_NAME="end-to-end-etl-pipline"
+export LOCATION="europe-west9"
+export IMAGE_TAG="latest"
+export SERVICE_ACCOUNT="/app/credentials.json"
 
 
 
