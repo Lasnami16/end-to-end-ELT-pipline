@@ -2,6 +2,7 @@ with source_documents AS (
     SELECT
         _id AS id,
         name AS document_name,
+        standardized_name,
         description AS document_description,
         created_at,
         updated_at

@@ -22,10 +22,8 @@ class MongoJSONEncoder(json.JSONEncoder):
 def fetch_collection(collection_name):
     db = get_mongodb()
     collection = db[collection_name]
-    
     # Fetch all documents from the collection
     cursor = collection.find()
-    
     # Convert each MongoDB document to JSON and save in NDJSON format
     json_data = ""
     for document in cursor:

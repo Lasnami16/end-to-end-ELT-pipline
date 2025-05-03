@@ -103,6 +103,9 @@ gcloud builds submit `
     --verbosity="debug" .
 
 
+# run specific target
+dbt run -s translation_info --target dev
+
 
 
 
