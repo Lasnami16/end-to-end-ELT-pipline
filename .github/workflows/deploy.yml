@@ -21,11 +21,11 @@ jobs:
 
       - name: Authenticate Docker with Artifact Registry
         run: |
-          gcloud auth configure-docker ${{ secrets.REGION }}-docker.pkg.dev 
+          gcloud auth configure-docker ${{ secrets.REGION }}-docker.pkg.dev --quiet
 
-      - name: Decode and write credentials.json
+      - name: Write credentials file
         run: |
-          echo "${{ secrets.GOOGLE_CREDENTIALS_JSON }}" | base64 -d > credentials.json
+          echo '${{ secrets.GOOGLE_CREDENTIALS_JSON }}' > credentials.json
 
       - name: Build Docker image
         run: |
@@ -33,13 +33,13 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.IMAGE_NAME }} 
+          docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.IMAGE_NAME }}
 
       - name: Update Cloud Run Job
         run: |
           gcloud run jobs update mongodb-to-gcs-job \
             --image ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.IMAGE_NAME }} \
             --region ${{ secrets.REGION }} \
-            --set-env-vars "MONGODB_CONNECTION=${{ secrets.MONGODB_CONNECTION }},GCS_BUCKET_NAME=${{ secrets.GCS_BUCKET_NAME }},GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json,GCS_FOLDER=${{ secrets.GCS_FOLDER }}" \
+            --set-env-vars "MONGODB_CONNECTION=${{ secrets.MONGODB_CONNECTION }},GCS_BUCKET_NAME=${{ secrets.GCS_BUCKET_NAME }},GCS_FOLDER=${{ secrets.GCS_FOLDER }},GOOGLE_APPLICATION_CREDENTIALS=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" \
             --memory 512Mi \
             --service-account ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
