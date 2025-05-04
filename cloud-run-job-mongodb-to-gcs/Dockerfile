@@ -12,7 +12,7 @@ COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Set environment variable for Google credentials path (if you're not using default service account)
-ENV GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
+#ENV GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
 
 # Command to run
 CMD ["python", "main.py"]
