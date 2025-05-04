@@ -29,11 +29,11 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.IMAGE_NAME }} .
+          docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.IMAGE_NAME }} cloud-run-job-mongodb-to-gcs
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.IMAGE_NAME }}
+          docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.IMAGE_NAME }} 
 
       - name: Update Cloud Run Job
         run: |
