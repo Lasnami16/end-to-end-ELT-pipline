@@ -21,7 +21,7 @@ jobs:
 
       - name: Authenticate Docker with Artifact Registry
         run: |
-          gcloud auth configure-docker ${{ secrets.REGION }}-docker.pkg.dev --quiet
+          gcloud auth configure-docker ${{ secrets.REGION }}-docker.pkg.dev 
 
       - name: Decode and write credentials.json
         run: |
