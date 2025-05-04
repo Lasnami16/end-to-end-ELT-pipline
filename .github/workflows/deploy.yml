@@ -10,16 +10,20 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Set up Google Cloud SDK
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS_JSON }}'
+
+      - name: Set up gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
-          service_account_key: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
-          export_default_credentials: true
+          install_components: 'beta'
 
-      - name: Write credentials file
+      - name: Write credentials file for Docker auth
         run: |
           echo '${{ secrets.GOOGLE_CREDENTIALS_JSON }}' > ${{ github.workspace }}/credentials.json
 
@@ -31,14 +35,10 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.IMAGE_NAME }} cloud-run-job-mongodb-to-gcs
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/credentials.json
 
       - name: Push Docker image
         run: |
           docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.IMAGE_NAME }}
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/credentials.json
 
       - name: Update Cloud Run Job
         run: |
