@@ -44,3 +44,59 @@ gcloud run jobs update mongodb-to-gcs-job `
 
 #passe the encoded credentials.json file:
 [Convert]::ToBase64String([System.IO.File]::ReadAllBytes("C:\Users\hp\OneDrive\Bureau\projects\end-to-end-ELT-pipline\cloud-run-job-mongodb-to-gcs\credentials.json")) > encoded.txt 
+
+
+
+
+
+
+###### deploy.yml works:
+name: Deploy to Cloud Run Job
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS_JSON }}'
+
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          install_components: 'beta'
+
+      - name: Write credentials.json to Docker context
+        run: |
+          echo '${{ secrets.GOOGLE_CREDENTIALS_JSON }}' > cloud-run-job-mongodb-to-gcs/credentials.json
+
+      - name: Authenticate Docker with Artifact Registry
+        run: |
+          gcloud auth configure-docker ${{ secrets.REGION }}-docker.pkg.dev --quiet
+
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.IMAGE_NAME }} cloud-run-job-mongodb-to-gcs
+
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.IMAGE_NAME }}
+
+      - name: Deploy Cloud Run Job
+        run: |
+          gcloud run jobs deploy mongodb-to-gcs-job \
+            --image ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.IMAGE_NAME }} \
+            --region ${{ secrets.REGION }} \
+            --set-env-vars "MONGODB_CONNECTION=${{ secrets.MONGODB_CONNECTION }},GCS_BUCKET_NAME=${{ secrets.GCS_BUCKET_NAME }},GCS_FOLDER=${{ secrets.GCS_FOLDER }},GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json" \
+            --memory 512Mi \
+            --service-account ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
