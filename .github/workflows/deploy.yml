@@ -40,9 +40,9 @@ jobs:
         run: |
           docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.IMAGE_NAME }}
 
-      - name: Update Cloud Run Job
+      - name: Create Cloud Run Job
         run: |
-          gcloud run jobs update mongodb-to-gcs-job \
+          gcloud run jobs create mongodb-to-gcs-job \
             --image ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.IMAGE_NAME }} \
             --region ${{ secrets.REGION }} \
             --set-env-vars "MONGODB_CONNECTION=${{ secrets.MONGODB_CONNECTION }},GCS_BUCKET_NAME=${{ secrets.GCS_BUCKET_NAME }},GCS_FOLDER=${{ secrets.GCS_FOLDER }},GOOGLE_APPLICATION_CREDENTIALS=${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" \
