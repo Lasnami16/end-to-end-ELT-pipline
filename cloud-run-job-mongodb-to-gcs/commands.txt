@@ -40,5 +40,6 @@ gcloud run jobs update mongodb-to-gcs-job `
   --service-account google-drive@wissem-school.iam.gserviceaccount.com
 
 
+
 #passe the encoded credentials.json file:
 [Convert]::ToBase64String([System.IO.File]::ReadAllBytes("C:\Users\hp\OneDrive\Bureau\projects\end-to-end-ELT-pipline\cloud-run-job-mongodb-to-gcs\credentials.json")) > encoded.txt 
