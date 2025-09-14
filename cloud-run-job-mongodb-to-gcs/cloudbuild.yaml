@@ -1,5 +1,9 @@
+substitutions:
+  _MONGODB_CONNECTION: ""
+  _GCS_BUCKET_NAME: ""
+  _GCS_FOLDER: ""
+
 steps:
-  # Build the Docker image and push to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args:
       [
@@ -14,28 +18,13 @@ steps:
         'push',
         'europe-west9-docker.pkg.dev/translation-471323/etl-docker-repo/etl-gcs-uploader:latest'
       ]
-
-  # Deploy to Cloud Run Job
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
     args:
       [
-        'run',
-        'jobs',
-        'deploy',
-        'etl-gcs-uploader-job',
-        '--image',
-        'europe-west9-docker.pkg.dev/translation-471323/etl-docker-repo/etl-gcs-uploader:latest',
-        '--region',
-        'europe-west1',
-        '--project',
-        'translation-471323',
-        '--service-account',
-        'etl-gcs-uploader@translation-471323.iam.gserviceaccount.com',
-        '--set-env-vars',
-        'MONGODB_CONNECTION=mongodb+srv://lasnamiabdelkarim:O9ztKaKpOGxZna9w@translation.d7i1rqk.mongodb.net/?retryWrites=true&w=majority,GCS_BUCKET_NAME=translation_raw_data_bucket,GCS_FOLDER=translation_collections_raw'
+        '-c',
+        "gcloud run jobs deploy etl-gcs-uploader-job --image europe-west9-docker.pkg.dev/translation-471323/etl-docker-repo/etl-gcs-uploader:latest --region europe-west1 --project translation-471323 --service-account etl-gcs-uploader@translation-471323.iam.gserviceaccount.com --set-env-vars MONGODB_CONNECTION=\"${_MONGODB_CONNECTION}\",GCS_BUCKET_NAME=\"${_GCS_BUCKET_NAME}\",GCS_FOLDER=\"${_GCS_FOLDER}\""
       ]
-
 
 images:
   - 'europe-west9-docker.pkg.dev/translation-471323/etl-docker-repo/etl-gcs-uploader:latest'

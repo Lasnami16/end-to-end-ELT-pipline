@@ -107,8 +107,26 @@ jobs:
 
 
 
-############### mount credentials.json to docker image:
+############### mount credentials.json to docker image (this is to test the pythob job on a local docker image):
 docker run --env-file .env \
   -v /Users/abdelkarimlasnami/Desktop/projects/end-to-end-ELT-pipline/cloud-run-job-mongodb-to-gcs/infra/gcp_credentials/etl-gcs-uploader-credentials.json:/app/credentials.json \
   -e GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json \
   mongodb-to-gcs-job
+
+
+
+##########
+Before building the image on cloud run job make sure to export the .env variables:
+export $(grep -v '^#' .env | xargs)
+
+Then check:
+echo $MONGODB_CONNECTION
+echo $GCS_BUCKET_NAME
+echo $GCS_FOLDER
+
+Then build and push:
+gcloud builds submit --config=cloudbuild.yaml \
+  --substitutions=_MONGODB_CONNECTION="mongodb+srv://lasnamiabdelkarim:O9ztKaKpOGxZna9w@translation.d7i1rqk.mongodb.net/?retryWrites=true&w=majority",_GCS_BUCKET_NAME="translation_raw_data_bucket",_GCS_FOLDER="translation_collections_raw"
+
+
+
