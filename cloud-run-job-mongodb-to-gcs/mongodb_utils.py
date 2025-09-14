@@ -6,7 +6,7 @@ from typing import Any, List
 from pymongo import MongoClient
 from bson import ObjectId
 
-from config import MONGODB_CONNECTION, GCS_BUCKET_NAME, GCS_FOLDER, GCP_CREDENTIALS_PATH
+from config import MONGODB_CONNECTION, GCS_BUCKET_NAME, GCS_FOLDER
 from gcs_utils import upload_json_to_gcs
 
 logging.basicConfig(level=logging.INFO)
@@ -74,8 +74,7 @@ def fetch_collection_data(collection_name: str, db_name: str = "translation") ->
 def export_collections_to_gcs(
     collection_names: List[str],
     bucket_name: str = GCS_BUCKET_NAME,
-    destination_folder: str = GCS_FOLDER,
-    service_account_file: str = GCP_CREDENTIALS_PATH
+    destination_folder: str = GCS_FOLDER
 ) -> None:
     """
     Fetch data from MongoDB collections and upload them to GCS as JSON files.
@@ -84,7 +83,6 @@ def export_collections_to_gcs(
         collection_names (List[str]): List of MongoDB collection names to export.
         bucket_name (str): GCS bucket name.
         destination_folder (str): Folder path inside the bucket.
-        service_account_file (str): Path to GCP service account key.
     """
     for collection_name in collection_names:
         logging.info(f"Exporting collection '{collection_name}'...")
@@ -95,8 +93,7 @@ def export_collections_to_gcs(
         upload_json_to_gcs(
             bucket_name=bucket_name,
             json_string=json_data,
-            destination_blob_name=blob_name,
-            service_account_file=service_account_file
+            destination_blob_name=blob_name
         )
 
         logging.info(f"Successfully exported '{collection_name}' to GCS.")

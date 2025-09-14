@@ -1,4 +1,3 @@
-import os
 from mongodb_utils import export_collections_to_gcs
 
 if __name__ == "__main__":
@@ -6,5 +5,5 @@ if __name__ == "__main__":
     export_collections_to_gcs(collections_to_export)
 
 
-            
-    
+
+

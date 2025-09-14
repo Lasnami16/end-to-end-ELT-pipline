@@ -79,3 +79,6 @@ Dockerfile*
 *.key
 *.crt
 #*.json
+
+commands.txt
+infra/

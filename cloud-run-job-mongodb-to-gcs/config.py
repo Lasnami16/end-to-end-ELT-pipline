@@ -8,9 +8,6 @@ load_dotenv()
 # MongoDB connection string
 MONGODB_CONNECTION: Optional[str] = os.getenv("MONGODB_CONNECTION")
 
-#Get the json key service account path
-GCP_CREDENTIALS_PATH = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-
 # GCS configuration
 GCS_BUCKET_NAME: Optional[str] = os.getenv("GCS_BUCKET_NAME")
 GCS_FOLDER: str = os.getenv("GCS_FOLDER", "translations")  # Default folder if not specified

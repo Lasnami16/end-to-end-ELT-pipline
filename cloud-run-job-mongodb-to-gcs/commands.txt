@@ -101,3 +101,14 @@ jobs:
             --memory 512Mi \
             --service-account ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
 
+
+
+
+
+
+
+############### mount credentials.json to docker image:
+docker run --env-file .env \
+  -v /Users/abdelkarimlasnami/Desktop/projects/end-to-end-ELT-pipline/cloud-run-job-mongodb-to-gcs/infra/gcp_credentials/etl-gcs-uploader-credentials.json:/app/credentials.json \
+  -e GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json \
+  mongodb-to-gcs-job
