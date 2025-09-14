@@ -126,7 +126,7 @@ echo $GCS_FOLDER
 
 Then build and push:
 gcloud builds submit --config=cloudbuild.yaml \
-  --substitutions=_MONGODB_CONNECTION="mongodb+srv://lasnamiabdelkarim:O9ztKaKpOGxZna9w@translation.d7i1rqk.mongodb.net/?retryWrites=true&w=majority",_GCS_BUCKET_NAME="translation_raw_data_bucket",_GCS_FOLDER="translation_collections_raw"
+  --substitutions=_MONGODB_CONNECTION="your_mongodb_uri",_GCS_BUCKET_NAME="bucket_name",_GCS_FOLDER="folder_name"
 
 
 
